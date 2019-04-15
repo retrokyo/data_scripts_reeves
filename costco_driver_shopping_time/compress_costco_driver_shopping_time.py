@@ -12,7 +12,7 @@ import numpy as np
 '''
 Create and set up data frame for usage
 '''
-df = pd.read_csv(r'file:///C:/Users/froni/Desktop/honestbee/operational/script_files/costco_driver_shopping_time/driver_shopping_time_wk_02_11.csv')
+df = pd.read_csv(r'file:///C:/Users/reeves/Desktop/operational/costco_driver_shopping_time/driver_shopping_time_wk_13.csv')
 
 df.rename(columns={'Stores Name' : 'store_name',
                    'Bees Name' : 'bee_name',
@@ -50,7 +50,7 @@ for i in range(len(df.s_time) - 1):
             grouping += 1
     else:
         grouping += 1
-        
+
 #%%
 '''
 Get the maximum and minimum times of each bucketed group. Thanks! @Nino
@@ -92,4 +92,4 @@ pivot = compressed_df.pivot_table(index='s_date',
 '''
 Export to excel
 '''
-pivot.to_excel(r'C:/Users/froni/Desktop/honestbee/operational/script_files/costco_driver_shopping_time/driver_shopping_time_compressed.xlsx')
+pivot.to_excel(r'C:/Users/reeves/Desktop/operational/costco_driver_shopping_time/driver_shopping_time_compressed_wk_13.xlsx')

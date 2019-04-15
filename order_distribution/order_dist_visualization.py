@@ -13,11 +13,12 @@ import geopandas as gpd
 
 #%%
 
-df = pd.read_excel(r'C:/Users/froni/Desktop/honestbee/Operational/Script Files/Grocery Driver Path/bucketed.xlsx')
-zones = pd.read_csv(r'C:/Users/froni/Desktop/honestbee/Operational/Script Files/Grocery Driver Path/zone_polygons.csv')
+df = pd.read_excel(r'file:///H:/honestbee/operational/choropleth_order_dist/bucketed.xlsx')
+zones = pd.read_csv(r'file:///H:/honestbee/operational/zone_poly/zone_polygons.csv')
 #%%
 
-costco = df.loc[df['hub_name'] == 'B:COSTCOkawasaki']
+costco = df.loc[(df['hub_name'] == 'B:COSTCOkawasaki') & 
+                (df.ff_ends_week > 7)]
 
 zones.rename(columns={'Zones Zone ID' : 'zone_id',
                       'Zones Zone Name' : 'zone_name',
@@ -27,13 +28,14 @@ zones.rename(columns={'Zones Zone ID' : 'zone_id',
 zones.dropna(inplace=True)
 zones.reset_index(drop=True, inplace=True)
 #%%
-non_coscto2 = [i for i in df.itertuples(index=False, name=None) if ((i[3] != 'B:COSTCOkawasaki') & ('TOKYO' in i[3]))]
-
+non_costco2 = [i for i in df.itertuples(index=False, name=None) if ((i[3] != 'B:COSTCOkawasaki') & (r'TOKYO' in i[8]) & 
+                                        (i[0] > 7))]
+non_costco2 = pd.DataFrame(non_costco2, index=range(len(non_costco2)), columns = df.columns.tolist())
 #%%
 non_costco = df.loc[(df['hub_name'] != 'B:COSTCOkawasaki')]    
 #%%
 
-non_costco_count = non_costco.groupby('drop_zone', as_index=False)['ff_ends_tod'].count()
+non_costco_count = non_costco2.groupby('drop_zone', as_index=False)['ff_ends_tod'].count()
 
 costco_count = costco.groupby('drop_zone', as_index=False)['ff_ends_tod'].count()
 
@@ -70,10 +72,11 @@ fm.Choropleth(geo_data=zone_geometry.to_json(),
               line_opacity=1,
               smooth_factor=1.2,
               name='Costco Kawasaki Distribution',
+              highlight=True,
               legend_name='Order Count').add_to(order_dist_costco)
 
 fm.LayerControl().add_to(order_dist_costco)
-order_dist_costco.save(r'C:/Users/froni/Desktop/honestbee/Operational/Script Files/Grocery Driver Path/test.html')
+order_dist_costco.save(r'H:/honestbee/operational/choropleth_order_dist/costco_distribution_map.html')
 
 #%%
 
@@ -90,7 +93,8 @@ fm.Choropleth(geo_data=zone_geometry.to_json(),
               nan_fill_opacity=0.2,
               line_opacity=1,
               smooth_factor=1.2,
+              highlight=True,
               legend_name='Order Count').add_to(order_dist_non_costco)
 
 fm.LayerControl().add_to(order_dist_non_costco)
-order_dist_non_costco.save(r'C:/Users/froni/Desktop/honestbee/Operational/Script Files/Grocery Driver Path/test2.html')
+order_dist_non_costco.save(r'H:/honestbee/operational/choropleth_order_dist/non_costco_distribution_map.html')
