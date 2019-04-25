@@ -2,6 +2,7 @@ import folium as fm
 
 from node_class import *
 
+
 def node_map(node_list, city='tokyo', save=False):
     '''
     Create a map from a collection of node, and drop_node objects.\n
