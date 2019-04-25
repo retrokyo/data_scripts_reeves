@@ -1,0 +1,32 @@
+html {
+    height: 97%;
+    width: 99%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #383835;
+}
+
+iframe.map-frame {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+}
+
+div.map-container {
+    height: 80%;
+    width: 80%;
+    padding-left: 10%;
+}
+
+div.heading {
+    height:  15%;
+    width: 100%;
+}
+
+p {
+    color: rgb(46, 191, 228);
+}
