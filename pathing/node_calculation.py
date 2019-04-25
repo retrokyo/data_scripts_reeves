@@ -31,7 +31,7 @@ def node_map(node_list, city='tokyo', save=False):
     for node in node_list:
         
         node.calculate_node_info(travel_path[0])
-        
+
         fm.Marker(location=[node.lat, node.long],
                     tooltip=fm.Tooltip(text=node.retrieve_node_info()),
                     icon=fm.Icon(color='blue', icon='angle-down', prefix='fa')).add_to(node_map)
@@ -42,3 +42,18 @@ def node_map(node_list, city='tokyo', save=False):
         node_map.save(r'C:/Users/reeves/Desktop/route_test.html')
 
     return node_map
+
+def node_path_calc(node_list):
+    node_path = []
+
+    for node in node_list:
+        node.calculate_node_info[node_list[0]]
+
+    node_path.append(node_list[0])
+    node_list.pop[0]
+    
+    for node in node_list:
+        pass
+
+def sort_nodes(node_list):
+    
